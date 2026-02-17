@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Customer Feedback{% endblock %}
+
+{% block extra_head %}
+<style>
+    .feedback-container {
+        display: grid;
+        grid-template-columns: 1fr 1.5fr;
+        gap: 3rem;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    @media (max-width: 992px) {
+        .feedback-container {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .feedback-form-card {
+        position: sticky;
+        top: 100px;
+        height: fit-content;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: var(--sand);
+        font-weight: 500;
+    }
+
+    .form-control,
+    .form-select {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 12px;
+        color: white;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: var(--accent);
+        outline: none;
+        box-shadow: 0 0 15px rgba(0, 242, 254, 0.2);
+    }
+
+    .review-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .review-card {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .review-card:hover {
+        transform: translateX(10px);
+        background: rgba(255, 255, 255, 0.12);
+    }
+
+    .review-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
+
+    .reviewer-name {
+        font-weight: 600;
+        color: var(--sand);
+        font-size: 1.1rem;
+    }
+
+    .review-rating {
+        color: #ffc107;
+        font-size: 0.9rem;
+    }
+
+    .review-date {
+        font-size: 0.8rem;
+        opacity: 0.6;
+        margin-top: 0.5rem;
+    }
+
+    .review-comment {
+        line-height: 1.6;
+        font-style: italic;
+    }
+
+    .stars-display {
+        display: inline-block;
+    }
+
+    .section-title {
+        font-size: 2.5rem;
+        color: var(--sand);
+        margin-bottom: 2rem;
+        text-align: center;
+        text-transform: uppercase;
+        letter-spacing: 3px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="section-title">Customer Reviews</h1>
+
+<div class="feedback-container">
+    <!-- Feedback Form -->
+    <div class="feedback-form-card">
+        <div class="card">
+            <h2 style="color: var(--sand); margin-bottom: 1.5rem;">Share Your Experience</h2>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label>Name</label>
+                    {{ form.name }}
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label>Rating</label>
+                    {{ form.rating }}
+                </div>
+                <div class="form-group">
+                    <label>Comment</label>
+                    {{ form.comment }}
+                </div>
+                <button type="submit" class="btn-order">Submit Feedback</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reviews List -->
+    <div class="review-list">
+        {% if reviews %}
+        {% for review in reviews %}
+        <div class="review-card">
+            <div class="review-header">
+                <span class="reviewer-name">{{ review.name }}</span>
+                <div class="review-rating">
+                    {% for i in "12345" %}
+                    {% if forloop.counter <= review.rating %} <i class="fas fa-star"></i>
+                        {% else %}
+                        <i class="far fa-star"></i>
+                        {% endif %}
+                        {% endfor %}
+                </div>
+            </div>
+            <p class="review-comment">"{{ review.comment }}"</p>
+            <div class="review-date">
+                <i class="far fa-clock"></i> {{ review.created_at|date:"F d, Y" }}
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="card" style="text-align: center;">
+            <p>No reviews yet. Be the first to share your experience!</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

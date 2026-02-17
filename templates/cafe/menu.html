@@ -1,0 +1,266 @@
+{% extends 'base.html' %}
+
+{% block title %}The Wave Menu - Coastal Fusion{% endblock %}
+
+{% block extra_head %}
+<style>
+    :root {
+        --spicy: #ff4757;
+        --vegan: #2ed573;
+        --gf: #eccc68;
+    }
+
+    .menu-nav {
+        display: flex;
+        justify-content: center;
+        gap: 1.5rem;
+        position: sticky;
+        top: 80px;
+        z-index: 900;
+        background: rgba(5, 25, 55, 0.8);
+        backdrop-filter: blur(10px);
+        padding: 1rem;
+        border-radius: 50px;
+        margin: 2rem auto;
+        width: fit-content;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .menu-nav a {
+        color: var(--foam);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: color 0.3s;
+    }
+
+    .menu-nav a:hover {
+        color: var(--accent);
+    }
+
+    .category-section {
+        margin-top: 6rem;
+        scroll-margin-top: 150px;
+    }
+
+    .category-header {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    .category-header h2 {
+        font-size: 2.5rem;
+        color: var(--sand);
+        margin: 0;
+    }
+
+    .category-line {
+        flex: 1;
+        height: 1px;
+        background: linear-gradient(to right, var(--accent), transparent);
+    }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2.5rem;
+    }
+
+    .item-card {
+        background: var(--glass);
+        backdrop-filter: blur(12px);
+        border-radius: 28px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+    }
+
+    .item-card:hover {
+        transform: translateY(-12px);
+        border-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .item-img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+    }
+
+    .item-content {
+        padding: 1.5rem;
+    }
+
+    .item-badges {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .dietary-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(5px);
+        color: white;
+    }
+
+    .price-tag {
+        font-weight: 600;
+        color: var(--accent);
+        font-size: 1.2rem;
+    }
+
+    .fusion-badge {
+        background: linear-gradient(45deg, #ff8c00, #ff4e50);
+        color: white;
+        padding: 0.2rem 0.8rem;
+        border-radius: 50px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .spice-meter {
+        display: flex;
+        gap: 4px;
+        margin-top: 0.5rem;
+    }
+
+    .chill {
+        color: #ccc;
+    }
+
+    .spiced {
+        color: var(--spicy);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 4rem;">
+    <h1 style="color: var(--sand); font-size: 4rem; margin-bottom: 1rem; text-shadow: 0 10px 20px rgba(0,0,0,0.3);">
+        <i class="fas fa-umbrella-beach"></i> The Coastal Selection
+    </h1>
+    <p style="font-size: 1.3rem; opacity: 0.9; max-width: 700px; margin: 0 auto;">
+        From sun-drenched smoothies to fiery coastal starters, explore our curated fusion of international waves and
+        Indian shores.
+    </p>
+</div>
+
+<div class="menu-nav">
+    {% if hot_drinks %}<a href="#hot">Hot Brews</a>{% endif %}
+    {% if ice_drinks %}<a href="#ice">Ice Specials</a>{% endif %}
+    {% if smoothies %}<a href="#smoothies">Smoothies</a>{% endif %}
+    {% if combos %}<a href="#combos">Combo Deals</a>{% endif %}
+
+
+    {% if starters %}<a href="#starters" style="position: relative;">Indian Starters <span
+            style="position: absolute; top: -10px; right: -20px; background: var(--spicy); color: white; font-size: 0.6rem; padding: 2px 6px; border-radius: 10px; text-transform: uppercase;">New!</span></a>
+    {% endif %}
+    {% if seasonal_items %}<a href="#seasonal">Seasonal</a>{% endif %}
+</div>
+
+<!-- Seasonal Items -->
+{% if seasonal_items %}
+<section id="seasonal" class="category-section">
+    <div class="category-header">
+        <h2><i class="fas fa-magic"></i> {{ current_season_name }} Features</h2>
+        <div class="category-line"></div>
+    </div>
+    <div class="menu-grid">
+        {% for item in seasonal_items %}
+        <div class="item-card" style="border: 2px solid var(--accent);">
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-img">
+            <div class="item-content">
+                <div style="display: flex; justify-content: space-between; align-items: start;">
+                    <h3 style="margin: 0; color: var(--sand);">{{ item.name }}</h3>
+                    <span class="price-tag">₹{{ item.price }}</span>
+                </div>
+                <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8;">{{ item.description }}</p>
+                <span class="fusion-badge">Limited Seasonal</span>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Hot Brews -->
+{% if hot_drinks %}
+<section id="hot" class="category-section">
+    <div class="category-header">
+        <h2><i class="fas fa-mug-hot"></i> Warm Waves</h2>
+        <div class="category-line"></div>
+    </div>
+    <div class="menu-grid">
+        {% for drink in hot_drinks %}
+        {% include 'cafe/item_card.html' with item=drink %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Ice Specials -->
+{% if ice_drinks %}
+<section id="ice" class="category-section">
+    <div class="category-header">
+        <h2><i class="fas fa-snowflake"></i> Chilled Coastal</h2>
+        <div class="category-line"></div>
+    </div>
+    <div class="menu-grid">
+        {% for drink in ice_drinks %}
+        {% include 'cafe/item_card.html' with item=drink %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+<!-- Smoothies -->
+{% if smoothies %}
+<section id="smoothies" class="category-section">
+    <div class="category-header">
+        <h2><i class="fas fa-blender"></i> Tropical Blend</h2>
+        <div class="category-line"></div>
+    </div>
+    <div class="menu-grid">
+        {% for smoothie in smoothies %}
+        {% include 'cafe/item_card.html' with item=smoothie %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+
+
+<!-- Indian Starters -->
+{% if starters %}
+<section id="starters" class="category-section">
+    <div class="category-header">
+        <h2><i class="fas fa-fire"></i> WaveFusion Starters</h2>
+        <div class="category-line"></div>
+        <a href="{% url 'starter_menu' %}" class="btn"
+            style="background: var(--accent); color: var(--deep-sea); padding: 0.5rem 1.5rem; border-radius: 50px; text-decoration: none; font-size: 0.9rem; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0, 119, 190, 0.4);">
+            Explore Starters <i class="fas fa-chevron-right"></i>
+        </a>
+    </div>
+    <div class="menu-grid">
+        {% for starter in starters %}
+        {% include 'cafe/item_card.html' with item=starter %}
+        {% endfor %}
+    </div>
+</section>
+{% endif %}
+
+{% endblock %}

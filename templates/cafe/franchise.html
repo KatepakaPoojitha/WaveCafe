@@ -1,0 +1,181 @@
+{% extends 'base.html' %}
+
+{% block title %}Franchise - Ride the Wave of Growth{% endblock %}
+
+{% block extra_head %}
+<style>
+    .franchise-hero {
+        height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('/media/drinks/hero_bg.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 30px;
+        margin-bottom: 4rem;
+    }
+
+    .franchise-hero h1 {
+        font-size: 3.5rem;
+        color: var(--sand);
+        margin-bottom: 1rem;
+    }
+
+    .franchise-hero p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        color: #ddd;
+    }
+
+    .kit-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        margin-bottom: 6rem;
+        align-items: center;
+    }
+
+    .kit-features {
+        list-style: none;
+        padding: 0;
+    }
+
+    .kit-features li {
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        font-size: 1.1rem;
+        color: #ccd;
+    }
+
+    .kit-features i {
+        color: var(--foam);
+        margin-right: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .package-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 6rem;
+    }
+
+    .package-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 2rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        transition: transform 0.3s;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .package-card:hover {
+        transform: translateY(-10px);
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .package-icon {
+        font-size: 3rem;
+        color: var(--sand);
+        margin-bottom: 1.5rem;
+    }
+
+    .investment-tag {
+        background: var(--foam);
+        color: #00334e;
+        padding: 0.3rem 0.8rem;
+        border-radius: 5px;
+        font-weight: 700;
+        font-size: 0.9rem;
+        display: inline-block;
+        margin-bottom: 1rem;
+    }
+
+    .setup-info {
+        margin-top: auto;
+        padding-top: 1.5rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 0.9rem;
+        color: var(--foam);
+    }
+
+    @media (max-width: 768px) {
+        .kit-section {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="franchise-hero">
+    <h1>Own a WaveCafe</h1>
+    <p>Join India's fastest-growing coastal coffee brand. Low investment, high-impact kiosks designed for the modern
+        entrepreneur.</p>
+</div>
+
+<div class="kit-section">
+    <div>
+        <h2 class="tm-text-primary" style="font-size: 2.5rem; margin-bottom: 1.5rem;">The Starter Kit</h2>
+        <p style="font-size: 1.1rem; line-height: 1.8; color: #ccd; margin-bottom: 2rem;">
+            We've simplified the coffee business. Our "Plug & Play" model allows you to start brewing in less than 45
+            days. Whether it's a beach-side cart or a premium mall kiosk, we provide everything you need to succeed.
+        </p>
+        <ul class="kit-features">
+            <li><i class="fas fa-scroll"></i> Standardized Recipes & Training</li>
+            <li><i class="fas fa-truck-loading"></i> Verified Supplier Network</li>
+            <li><i class="fas fa-tools"></i> Smart Kiosk Design & Setup</li>
+            <li><i class="fas fa-bullhorn"></i> National Marketing Support</li>
+        </ul>
+    </div>
+    <div class="card"
+        style="padding: 3rem; background: linear-gradient(135deg, rgba(0,119,190,0.1), rgba(0,119,190,0.3)); text-align: center; border: 2px solid var(--foam);">
+        <h3 style="color: var(--sand); margin-bottom: 1rem;">Tier-2 & Tier-3 Focus</h3>
+        <p style="color: #ddd;">Expanding the wave beyond metros. Small formats with big returns.</p>
+        <hr style="border-color: rgba(255,255,255,0.1); margin: 2rem 0;">
+        <div style="font-size: 0.9rem; color: #aaa;">Inquiry Hotline</div>
+        <div style="font-size: 1.5rem; color: var(--sand); font-weight: 700;">1800-WAVE-CAFE</div>
+    </div>
+</div>
+
+<h2 class="tm-text-primary" style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">Investment Models</h2>
+
+<div class="package-grid">
+    {% for package in packages %}
+    <div class="package-card">
+        <div class="package-icon">
+            {% if package.location_type == 'MALL' %}<i class="fas fa-store"></i>
+            {% elif package.location_type == 'COLLEGE' %}<i class="fas fa-university"></i>
+            {% elif package.location_type == 'BEACH' %}<i class="fas fa-umbrella-beach"></i>
+            {% elif package.location_type == 'HIGHWAY' %}<i class="fas fa-road"></i>
+            {% endif %}
+        </div>
+        <span class="investment-tag">₹ {{ package.investment_range }}</span>
+        <h3 style="color: var(--sand); margin-bottom: 1rem;">{{ package.name }}</h3>
+        <p style="color: #ccd; font-size: 0.95rem; line-height: 1.6;">{{ package.description }}</p>
+        <div class="setup-info">
+            <i class="far fa-clock"></i> Setup Time: {{ package.setup_time }}
+        </div>
+    </div>
+    {% empty %}
+    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+        <p>Investment models are currently being updated for the new season. Stay tuned!</p>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="card"
+    style="text-align: center; background: rgba(0, 0, 0, 0.4); padding: 4rem; border: 1px dashed var(--foam);">
+    <h2 style="color: var(--sand); margin-bottom: 1.5rem;">Ready to catch the wave?</h2>
+    <p style="margin-bottom: 2.5rem; color: #ccd;">Download our detailed prospectus and supplier list to get started.
+    </p>
+    <a href="{% url 'contact' %}" class="btn">Enquire Now</a>
+</div>
+{% endblock %}

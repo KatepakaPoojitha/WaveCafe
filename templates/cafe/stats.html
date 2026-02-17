@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}WaveCafe Statistics & Presence{% endblock %}
+
+{% block extra_head %}
+<style>
+    .stats-dashboard {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 4rem;
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .stat-card {
+        text-align: center;
+        padding: 3rem 2rem;
+    }
+
+    .stat-value {
+        font-size: 3rem;
+        font-weight: 700;
+        color: var(--sand);
+        margin-bottom: 0.5rem;
+        display: block;
+    }
+
+    .stat-label {
+        font-size: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--foam);
+        opacity: 0.8;
+    }
+
+    .states-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .state-item {
+        background: rgba(255, 255, 255, 0.03);
+        padding: 1.5rem;
+        border-radius: 15px;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .state-name {
+        font-weight: 600;
+        color: var(--sand);
+    }
+
+    .branch-count {
+        background: var(--sand);
+        color: var(--deep-sea);
+        padding: 0.2rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .chart-placeholder {
+        height: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 5px;
+        overflow: hidden;
+        margin-top: 1rem;
+    }
+
+    .chart-fill {
+        height: 100%;
+        background: var(--accent);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 4rem;">
+    <h1 style="color: var(--sand); font-size: 3rem; margin-bottom: 1rem;">WaveCafe Insights</h1>
+    <p style="font-size: 1.2rem; opacity: 0.8;">Transparency in brewing. Excellence in every state.</p>
+</div>
+
+<div class="stats-dashboard">
+    <div class="card stat-card">
+        <i class="fas fa-beer" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+        <span class="stat-value">{{ total_drinks }}</span>
+        <span class="stat-label">Total Brews</span>
+    </div>
+    <div class="card stat-card">
+        <i class="fas fa-indian-rupee-sign" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+        <span class="stat-value">₹{{ avg_price }}</span>
+        <span class="stat-label">Average Price</span>
+    </div>
+    <div class="card stat-card">
+        <i class="fas fa-store" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+        <span class="stat-value">{{ total_branches }}</span>
+        <span class="stat-label">Indian Outlets</span>
+    </div>
+    <div class="card stat-card">
+        <i class="fas fa-gift" style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;"></i>
+        <span class="stat-value">{{ special_count }}</span>
+        <span class="stat-label">Seasonal Specials</span>
+    </div>
+</div>
+
+<div class="card" style="margin-bottom: 4rem;">
+    <h2 style="color: var(--sand); margin-bottom: 2rem; text-align: center;">Our Presence Across States</h2>
+    <div class="states-grid">
+        {% for state_info in branch_locations %}
+        <div class="state-item">
+            <div>
+                <span class="state-name">{{ state_info.state }}</span>
+                <p style="font-size: 0.8rem; margin: 0.2rem 0 0; opacity: 0.6;">{{ state_info.cities|join:", " }}</p>
+            </div>
+            <span class="branch-count">{{ state_info.count }} Outlets</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem;">
+    <div class="card">
+        <h3 style="color: var(--sand);">Premium Offering</h3>
+        {% if max_price %}
+        <p>Our most exclusive brew is the <strong>{{ max_price.name }}</strong>, crafted for true connoisseurs at ₹{{
+            max_price.price }}.</p>
+        {% else %}
+        <p>Curating our premium collection...</p>
+        {% endif %}
+    </div>
+    <div class="card">
+        <h3 style="color: var(--sand);">Sustainability Goal</h3>
+        <p>Current progress towards 100% sustainable sourcing:</p>
+        <div class="chart-placeholder">
+            <div class="chart-fill" style="width: 85%;"></div>
+        </div>
+        <p style="text-align: right; font-size: 0.8rem; margin-top: 0.5rem; color: var(--accent);">85% Complete</p>
+    </div>
+</div>
+
+<div style="text-align: center;">
+    <a href="{% url 'menu' %}" class="btn">Explore the Menu</a>
+</div>
+{% endblock %}

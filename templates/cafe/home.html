@@ -1,0 +1,377 @@
+{% extends 'base.html' %}
+
+{% block title %}Home - Ride the Wave{% endblock %}
+
+{% block extra_head %}
+<style>
+    .hero {
+        height: 80vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/media/drinks/hero_bg.jpg');
+        background-size: cover;
+        background-position: center;
+        border-radius: 30px;
+        margin-bottom: 4rem;
+        animation: fadeIn 1s ease-out;
+    }
+
+    .hero h1 {
+        font-size: 4rem;
+        color: var(--sand);
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .hero p {
+        font-size: 1.4rem;
+        max-width: 700px;
+        margin-bottom: 2rem;
+        font-weight: 300;
+        text-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+        font-size: 2.5rem;
+        color: var(--sand);
+        margin-bottom: 0.5rem;
+    }
+
+    .story-section {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: center;
+        margin-bottom: 6rem;
+    }
+
+    .story-img {
+        width: 100%;
+        height: 500px;
+        object-fit: cover;
+        border-radius: 30px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .story-text h2 {
+        font-size: 2.5rem;
+        color: var(--sand);
+        margin-bottom: 1.5rem;
+    }
+
+    .story-text p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #ccd;
+        margin-bottom: 2rem;
+    }
+
+    .featured-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-bottom: 6rem;
+    }
+
+    .featured-card {
+        padding: 0;
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .featured-img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+    }
+
+    .featured-info {
+        padding: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 {
+            font-size: 2.5rem;
+        }
+
+        .story-section {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .story-img {
+            height: 300px;
+        }
+    }
+
+    /* Seasonal Styles */
+    .seasonal-banner {
+        background: linear-gradient(135deg, var(--foam), var(--sand));
+        padding: 3rem;
+        border-radius: 30px;
+        margin-bottom: 4rem;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    }
+
+    .seasonal-banner h2 {
+        color: #00334e;
+        margin-bottom: 1rem;
+        font-size: 2.5rem;
+    }
+
+    .seasonal-banner p {
+        color: #00334e;
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    .limited-badge {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #ff4757;
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: 50px;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        box-shadow: 0 5px 15px rgba(255, 71, 87, 0.4);
+        transform: rotate(5deg);
+    }
+
+    .seasonal-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        margin-bottom: 6rem;
+    }
+
+    .seasonal-card {
+        background: rgba(255, 255, 255, 0.08);
+        border: 2px solid var(--foam);
+    }
+
+    .tag {
+        display: inline-block;
+        padding: 0.2rem 0.6rem;
+        border-radius: 5px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    /* Vibe Section Styles */
+    .vibe-section {
+        background: rgba(0, 0, 0, 0.3);
+        padding: 4rem 2rem;
+        border-radius: 30px;
+        margin-bottom: 6rem;
+        text-align: center;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .vibe-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+    }
+
+    .vibe-item i {
+        font-size: 2.5rem;
+        color: var(--sand);
+        margin-bottom: 1rem;
+    }
+
+    .experience-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 6rem;
+    }
+
+    .gallery-img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 20px;
+        transition: transform 0.3s;
+        cursor: pointer;
+    }
+
+    .gallery-img:hover {
+        transform: scale(1.05);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Ride The Caffeine Wave</h1>
+    <p>Premium coastal brewing. Sustainable beans. Tranquil vibes. Your perfect escape by the sea.</p>
+    <a href="{% url 'menu' %}" class="btn"><i class="fas fa-mug-hot"></i> Explore Menu</a>
+</div>
+
+<div class="story-section">
+    <img src="/media/drinks/about_cafe.jpg" alt="About WaveCafe" class="story-img">
+    <div class="story-text">
+        <h2>Our Ocean Story</h2>
+        <p>
+            Founded on the shores of the Atlantic, WaveCafe was born from a love of the ocean and the perfect cup of
+            coffee.
+            We believe that a great drink is more than just caffeine—it's a moment of peace in a busy world.
+        </p>
+        <p>
+            Our beans are ethically sourced from coastal regions worldwide, and we use local, organic ingredients
+            to bring you flavors that are as fresh as a sea breeze.
+        </p>
+        <a href="{% url 'about' %}" class="btn"
+            style="background: transparent; border: 1px solid var(--sand); color: var(--sand);">Learn More</a>
+    </div>
+</div>
+
+{% if seasonal_items %}
+<div class="seasonal-banner">
+    <span class="limited-badge">Only This Season!</span>
+    <h2>{{ current_season_name }} Specials</h2>
+    <p>Discover our refreshing limited-time creations. Available only until {{ season_end_month }}!</p>
+</div>
+
+<div class="seasonal-grid">
+    {% for item in seasonal_items %}
+    <div class="card featured-card seasonal-card">
+        {% if item.image %}
+        <img src="{{ item.image.url }}" alt="{{ item.name }}" class="featured-img">
+        {% else %}
+        <div
+            style="height: 250px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+            <span style="color: var(--sand);">Coming Soon...</span>
+        </div>
+        {% endif %}
+        <div class="featured-info">
+            <h3 style="color: var(--sand); margin-top: 0;">{{ item.name }}</h3>
+            <p style="font-size: 0.9rem; line-height: 1.5; color: #ccd;">{{ item.description }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span style="color: var(--foam); font-weight: 600;">{{ item.price }} ₹</span>
+                <span class="tag"
+                    style="background: var(--foam); color: #00334e; padding: 0.2rem 0.6rem; border-radius: 5px; font-size: 0.8rem;">{{
+                    item.get_category_display }}</span>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
+
+<div class="vibe-section" style="margin-bottom: 4rem;">
+    <h2 class="tm-text-primary" style="font-size: 2.5rem; color: var(--sand);">Local Partnership & Growth</h2>
+    <p style="color: #ccd; max-width: 800px; margin: 0 auto 3rem;">We're taking the wave inland. From campus pop-ups to
+        seasonal stalls at major food festivals and beach resorts, WaveCafe is expanding its footprint.</p>
+
+    <div class="vibe-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="vibe-item" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+            <i class="fas fa-university"></i>
+            <h3>Campus Pop-ups</h3>
+            <p style="font-size: 0.9rem;">Bringing energy to local colleges with student-driven stalls.</p>
+        </div>
+        <div class="vibe-item" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+            <i class="fas fa-glass-cheers"></i>
+            <h3>Event Stalls</h3>
+            <p style="font-size: 0.9rem;">Catch us at your favorite music and food festivals this season.</p>
+        </div>
+        <div class="vibe-item" style="background: rgba(255,255,255,0.05); padding: 2rem; border-radius: 20px;">
+            <i class="fas fa-hotel"></i>
+            <h3>Resort Tie-ups</h3>
+            <p style="font-size: 0.9rem;">Premium WaveCafe kiosks at luxury beach resorts and tourist hubs.</p>
+        </div>
+    </div>
+</div>
+
+<div class="vibe-section">
+    <h2 class="tm-text-primary" style="font-size: 2.5rem;">The Wave Vibe</h2>
+    <p style="color: #ccd; max-width: 700px; margin: 0 auto;">It's more than a cafe; it's your sunset sanctuary. We've
+        curated every detail—from ambient wave music to photo-ready aesthetics—to make every visit an experience.</p>
+
+    <div class="vibe-grid">
+        <div class="vibe-item">
+            <i class="fas fa-music"></i>
+            <h3>Wave Melodies</h3>
+            <p style="font-size: 0.9rem;">Immersive ocean soundscapes while you brew.</p>
+        </div>
+        <div class="vibe-item">
+            <i class="fas fa-camera-retro"></i>
+            <h3>Insta-Ready</h3>
+            <p style="font-size: 0.9rem;">Signature cups & beach-themed decor for your feed.</p>
+        </div>
+        <div class="vibe-item">
+            <i class="fas fa-couch"></i>
+            <h3>Coastal Lounge</h3>
+            <p style="font-size: 0.9rem;">The ultimate hangout spot for lazy seaside afternoons.</p>
+        </div>
+    </div>
+</div>
+
+<div class="section-title">
+    <h2>Experience Gallery</h2>
+    <p>Capturing moments by the shore.</p>
+</div>
+
+<div class="experience-gallery">
+    <img src="/media/drinks/lavender_latte.png" alt="Aesthetic Brew" class="gallery-img">
+    <img src="/media/drinks/about_cafe.jpg" alt="Vibe" class="gallery-img">
+    <img src="/media/drinks/hero_bg.jpg" alt="Sunset View" class="gallery-img">
+    <img src="/media/drinks/beach_cart.png" alt="Seaside Setup" class="gallery-img">
+</div>
+
+<div class="section-title">
+    <h2>Featured Brews</h2>
+    <p>Hand-picked favorites from our expert baristas.</p>
+</div>
+
+<div class="featured-grid">
+    {% for drink in featured_drinks %}
+    <div class="card featured-card">
+        {% if drink.image %}
+        <img src="{{ drink.image.url }}" alt="{{ drink.name }}" class="featured-img">
+        {% else %}
+        <div
+            style="height: 250px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+            <span style="color: var(--sand);">Refreshing...</span>
+        </div>
+        {% endif %}
+        <div class="featured-info">
+            <h3 style="color: var(--sand); margin-top: 0;">{{ drink.name }}</h3>
+            <p style="font-size: 0.9rem; line-height: 1.5; color: #ccd;">{{ drink.description|truncatewords:15 }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span style="color: var(--foam); font-weight: 600;">{{ drink.price }} ₹</span>
+                <a href="{% url 'menu' %}" style="color: var(--sand); text-decoration: none; font-size: 0.9rem;">View
+                    All →</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="card"
+    style="text-align: center; background: linear-gradient(rgba(0,119,190,0.2), rgba(0,119,190,0.4)); padding: 4rem;">
+    <h2 style="color: var(--sand); font-size: 2.5rem; margin-bottom: 1rem;">Visit Us Today</h2>
+    <p style="margin-bottom: 2rem; font-size: 1.1rem;">Located right on the pier, catch the sunset with your favorite
+        drink.</p>
+    <a href="{% url 'contact' %}" class="btn">Get Directions</a>
+</div>
+{% endblock %}

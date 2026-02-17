@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Smoothie Paradise - WaveCafe{% endblock %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 4rem;">
+    <h1 style="color: #ff8c00; font-size: 3rem; margin-bottom: 1rem;"><i class="fas fa-blender"></i> Smoothie Paradise
+    </h1>
+    <p style="font-size: 1.2rem; opacity: 0.8;">Fresh, vibrant, and packed with nutrients. Our signature smoothies are
+        the perfect tropical treat.</p>
+</div>
+
+<div class="menu-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+    {% for smoothie in smoothies %}
+    <div class="card"
+        style="padding: 0; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.1); transition: transform 0.3s ease;">
+        {% if smoothie.image %}
+        <img src="{{ smoothie.image.url }}" alt="{{ smoothie.name }}"
+            style="width: 100%; height: 250px; object-fit: cover;">
+        {% else %}
+        <div
+            style="height: 250px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+            <span style="color: var(--accent);">Refreshing...</span>
+        </div>
+        {% endif %}
+        <div style="padding: 1.5rem;">
+            <h3 style="color: var(--sand); margin-top: 0;">{{ smoothie.name }}</h3>
+            <p style="font-size: 0.9rem; line-height: 1.5; color: #ccd;">{{ smoothie.description }}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <span style="color: #4db6ac; font-weight: 600;">₹ {{ smoothie.price }}</span>
+                <span
+                    style="background: rgba(255,140,0,0.2); color: #ff8c00; padding: 0.2rem 0.6rem; border-radius: 5px; font-size: 0.8rem; font-weight: 700;">FRESH</span>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div style="grid-column: 1 / -1; text-align: center; padding: 3rem;">
+        <p>Our blenders are resting. New tropical blends coming soon!</p>
+    </div>
+    {% endfor %}
+</div>
+
+<div class="card" style="margin-top: 6rem; text-align: center; background: rgba(255, 255, 255, 0.05);">
+    <h2 style="color: var(--sand); margin-bottom: 1rem;">Want something lighter?</h2>
+    <p style="margin-bottom: 2rem;">Explore our refreshing selection of chilled brews and fruit juices.</p>
+    <a href="{% url 'ice_menu' %}" class="btn">View Ice Menu</a>
+</div>
+{% endblock %}

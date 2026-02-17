@@ -1,0 +1,372 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Starters Menu - WaveCafe{% endblock %}
+
+{% block content %}
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Lato:wght@300;400;700&display=swap');
+
+    :root {
+        --deep-blue: #0A192F;
+        --shelf-teal: #172A45;
+        --sea-foam: #64FFDA;
+        --light-slate: #E6F1FF;
+        --ocean-blue: #112240;
+        --sand-gold: #F4A460;
+    }
+
+    body {
+        background-color: var(--deep-blue);
+        color: var(--light-slate);
+        font-family: 'Lato', sans-serif;
+    }
+
+    .poster-container {
+        max-width: 1000px;
+        margin: 2rem auto;
+        padding: 4rem;
+        background-color: var(--ocean-blue);
+        /* Blend texture with blue */
+        background-image: url("{% static 'cafe/images/paper_texture.png' %}");
+        background-blend-mode: soft-light;
+        border: 2px solid var(--sea-foam);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 50px rgba(10, 25, 47, 0.8);
+    }
+
+    /* Abstract Organic Shapes */
+    .shape {
+        position: absolute;
+        z-index: 0;
+        opacity: 0.2;
+        mix-blend-mode: screen;
+        pointer-events: none;
+    }
+
+    .shape-1 {
+        top: -50px;
+        right: -50px;
+        width: 300px;
+        height: 300px;
+        background: radial-gradient(circle, var(--sea-foam), transparent 70%);
+        border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+        filter: blur(40px);
+        animation: float 20s infinite ease-in-out;
+    }
+
+    .shape-2 {
+        bottom: 10%;
+        left: -100px;
+        width: 400px;
+        height: 400px;
+        background: radial-gradient(circle, #00BFFF, transparent 70%);
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        filter: blur(50px);
+        animation: float 25s infinite ease-in-out reverse;
+    }
+
+    @keyframes float {
+        0% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+
+        50% {
+            transform: translate(20px, 20px) rotate(5deg);
+        }
+
+        100% {
+            transform: translate(0, 0) rotate(0deg);
+        }
+    }
+
+    .menu-header {
+        text-align: center;
+        margin-bottom: 4rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .menu-title {
+        font-family: 'Dancing Script', cursive;
+        font-size: 6rem;
+        color: var(--light-slate);
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5), 0 0 20px rgba(100, 255, 218, 0.2);
+        margin: 0;
+        line-height: 1;
+        transform: rotate(-2deg);
+    }
+
+    .shawarma-icon {
+        font-size: 2.5rem;
+        color: var(--sea-foam);
+        margin-top: 1rem;
+        opacity: 0.8;
+    }
+
+    .menu-content {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 5rem;
+    }
+
+    .menu-section {
+        margin-bottom: 3.5rem;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 2rem;
+        color: var(--sea-foam);
+        border-bottom: 2px solid var(--sea-foam);
+        padding-bottom: 0.5rem;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        font-style: italic;
+        text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .menu-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 0.8rem;
+        font-size: 1.2rem;
+    }
+
+    .item-name {
+        font-weight: 700;
+        color: var(--light-slate);
+        text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    .item-dots {
+        flex-grow: 1;
+        border-bottom: 1px dotted rgba(230, 241, 255, 0.3);
+        margin: 0 10px;
+        position: relative;
+        top: -6px;
+    }
+
+    .item-price {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        color: var(--sand-gold);
+        font-size: 1.3rem;
+    }
+
+    .image-frame {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 4px solid var(--sea-foam);
+        overflow: hidden;
+        position: absolute;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+        z-index: 2;
+        transition: transform 0.5s ease;
+    }
+
+    .image-frame:hover {
+        transform: scale(1.05) rotate(2deg);
+    }
+
+    .frame-top-left {
+        top: 20px;
+        left: 20px;
+    }
+
+    .frame-bottom-right {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    img.food-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .menu-content {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        .poster-container {
+            padding: 2rem;
+        }
+
+        .image-frame {
+            position: relative;
+            margin: 0 auto 2rem;
+            width: 150px;
+            height: 150px;
+            top: auto;
+            left: auto;
+            right: auto;
+            bottom: auto;
+            display: block;
+        }
+
+        .menu-title {
+            font-size: 4rem;
+        }
+    }
+</style>
+
+<div class="poster-container">
+    <!-- Decorative Shapes -->
+    <div class="shape shape-1"></div>
+    <div class="shape shape-2"></div>
+
+    <!-- Decorative Images 
+         Note: We use hardcoded paths for now, or ensure configured media serving. 
+         Assuming MEDIA_URL is /media/ as per settings.
+    -->
+    <div class="image-frame frame-top-left">
+        <img src="/media/menu/chicken_shawarma.jpg" alt="Shawarma Wrap" class="food-img">
+    </div>
+
+    <div class="menu-header">
+        <h1 class="menu-title">Starters Menu</h1>
+        <div class="shawarma-icon"><i class="fas fa-utensils"></i></div>
+    </div>
+
+    <div class="menu-content">
+        <!-- Left Column -->
+        <div class="menu-col">
+            <div class="menu-section">
+                <h3 class="section-title">Chicken Shawarma Roll</h3>
+                {% for item in shawarma_rolls %}
+                <div class="menu-item">
+                    <span class="item-name">{{ item.name }}</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="menu-section">
+                <h3 class="section-title">Chicken Shawarma Plate</h3>
+                {% for item in shawarma_plates %}
+                <div class="menu-item">
+                    <span class="item-name">{{ item.name }}</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+
+            <div class="menu-section">
+                <h3 class="section-title">Grilled Chicken</h3>
+                {% for item in grilled_chicken %}
+                <div class="menu-item">
+                    <span class="item-name">{{ item.name }}</span>
+                    <span class="item-dots"></span>
+                    <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h3 class="section-title">Loaded Fries</h3>
+            {% for item in loaded_fries %}
+            <div class="menu-item">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-dots"></span>
+                <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="menu-section">
+            <h3 class="section-title">Fusion Chaat</h3>
+            {% for item in fusion_chaats %}
+            <div class="menu-item">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-dots"></span>
+                <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="menu-col">
+        <div class="menu-section">
+            <h3 class="section-title">Barbeque Chicken</h3>
+            {% for item in bbq_chicken %}
+            <div class="menu-item">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-dots"></span>
+                <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="menu-section">
+            <h3 class="section-title">Family Boxes</h3>
+            {% for item in family_boxes %}
+            <div class="menu-item">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-dots"></span>
+                <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="menu-section">
+            <h3 class="section-title">Party Packs</h3>
+            {% for item in party_packs %}
+            <div class="menu-item">
+                <span class="item-name">{{ item.name }}</span>
+                <span class="item-dots"></span>
+                <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="menu-section">
+        <h3 class="section-title">Tandoori Chicken</h3>
+        {% for item in tandoori_chicken %}
+        <div class="menu-item">
+            <span class="item-name">{{ item.name }}</span>
+            <span class="item-dots"></span>
+            <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="menu-section">
+        <h3 class="section-title">Veg Starters</h3>
+        {% for item in veg_starters %}
+        <div class="menu-item">
+            <span class="item-name">{{ item.name }}</span>
+            <span class="item-dots"></span>
+            <span class="item-price">₹{{ item.price|floatformat:0 }}</span>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+
+<!-- Decorative Image -->
+<div class="image-frame frame-bottom-right">
+    <img src="/media/menu/grilled_chicken.jpg" alt="Grilled Chicken" class="food-img">
+</div>
+
+<div style="text-align: center; position: relative; z-index: 10; margin-top: 5rem;">
+    <a href="{% url 'menu' %}"
+        style="display: inline-block; padding: 12px 40px; border: 2px solid var(--sea-foam); color: var(--sea-foam); text-decoration: none; border-radius: 50px; font-family: 'Lato'; letter-spacing: 2px; font-weight: 700; transition: all 0.3s; background: rgba(0,0,0,0.3);">
+        BACK TO MAIN MENU
+    </a>
+</div>
+</div>
+{% endblock %}

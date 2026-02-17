@@ -1,0 +1,54 @@
+<div class="item-card">
+    <div class="item-badges">
+        {% if item.is_vegan %}<div class="dietary-icon" style="color: var(--vegan);" title="Vegan"><i
+                class="fas fa-leaf"></i></div>{% endif %}
+        {% if item.is_gluten_free %}<div class="dietary-icon" style="color: var(--gf);" title="Gluten Free"><i
+                class="fas fa-wheat-awn-circle-exclamation"></i></div>{% endif %}
+    </div>
+    {% if item.image %}
+    <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-img">
+    {% else %}
+    <div
+        style="height: 220px; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center;">
+        <span style="color: var(--accent);">Gourmet Selection...</span>
+    </div>
+    {% endif %}
+    <div class="item-content">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div>
+                {% if item.category != 'COMBO' %}
+                <h3 style="margin: 0; color: var(--sand);">{{ item.name }}</h3>
+                {% endif %}
+                {% if item.category == 'STARTER' or item.spice_level > 0 %}
+                <div class="spice-meter" title="Spice Level: {{ item.spice_level }}">
+                    <i class="fas fa-pepper-hot {% if item.spice_level >= 1 %}spiced{% else %}chill{% endif %}"></i>
+                    <i class="fas fa-pepper-hot {% if item.spice_level >= 2 %}spiced{% else %}chill{% endif %}"></i>
+                    <i class="fas fa-pepper-hot {% if item.spice_level >= 3 %}spiced{% else %}chill{% endif %}"></i>
+                </div>
+                {% endif %}
+            </div>
+            <span class="price-tag">₹{{ item.price }}</span>
+        </div>
+        <p style="font-size: 0.9rem; margin-top: 1rem; opacity: 0.8; line-height: 1.4;">{{ item.description }}</p>
+        <div style="display: flex; gap: 0.5rem; align-items: center; margin-top: 1rem;">
+            {% if item.category == 'STARTER' %}
+            <span class="fusion-badge">Coastal Fusion</span>
+            {% elif item.category == 'SMOOTHIE' %}
+            <span class="fusion-badge" style="background: linear-gradient(45deg, #4db6ac, #00897b);">Fresh Blend</span>
+            {% elif item.temp_type == 'HOT' %}
+            <span class="fusion-badge" style="background: linear-gradient(45deg, #ff7043, #d84315);">Warm Brew</span>
+            {% else %}
+            <span class="fusion-badge" style="background: linear-gradient(45deg, #4fc3f7, #0288d1);">Chilled</span>
+            {% endif %}
+
+            {% if item.is_special %}
+            <span title="Chef's Special" style="color: gold; font-size: 0.9rem;"><i class="fas fa-award"></i></span>
+            {% endif %}
+        </div>
+        <div style="margin-top: 1.5rem;">
+            <a href="{% url 'add_to_cart' item.id %}" class="btn-order">
+                <i class="fas fa-cart-plus"></i> Add to Cart
+            </a>
+        </div>
+    </div>
+</div>

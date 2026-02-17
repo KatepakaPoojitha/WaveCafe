@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - WaveCafe</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --ocean-blue: #0077be;
+            --deep-sea: #051937;
+            --foam: #f0f8ff;
+            --sand: #f4e4bc;
+            --glass: rgba(255, 255, 255, 0.08);
+            --accent: #00f2fe;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bgWaves {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Outfit', sans-serif;
+            background: linear-gradient(-45deg, #051937, #004d7a, #008793, #00bf72);
+            background-size: 400% 400%;
+            animation: bgWaves 15s ease infinite;
+            color: var(--foam);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        nav {
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(15px);
+            padding: 1.5rem 5%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--sand);
+            text-decoration: none;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(244, 228, 188, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-links a {
+            color: var(--foam);
+            text-decoration: none;
+            font-weight: 300;
+            font-size: 0.95rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--sand);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--sand);
+        }
+
+        main {
+            flex: 1;
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        footer {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card:hover {
+            transform: translateY(-12px) scale(1.02);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn {
+            background: var(--sand);
+            color: var(--deep-sea);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(244, 228, 188, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: white;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-cart {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            color: var(--sand) !important;
+            font-weight: 500 !important;
+            border: 1px solid var(--sand);
+        }
+
+        .btn-cart:hover {
+            background: var(--sand);
+            color: var(--deep-sea) !important;
+        }
+
+        .btn-order {
+            background: var(--ocean-blue);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+        }
+
+        .btn-order:hover {
+            background: var(--accent);
+            color: var(--deep-sea);
+            transform: scale(1.02);
+        }
+    </style>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <nav>
+        <a href="{% url 'home' %}" class="logo"><i class="fas fa-water"></i> WaveCafe</a>
+        <div class="nav-links">
+            <a href="{% url 'home' %}"><i class="fas fa-home"></i> Home</a>
+            <a href="{% url 'menu' %}"><i class="fas fa-utensils"></i> Full Menu</a>
+            <a href="{% url 'starter_menu' %}"><i class="fas fa-hotdog"></i> Starters</a>
+            <a href="{% url 'combo_menu' %}"><i class="fas fa-tags"></i> Combos</a>
+            <a href="{% url 'about' %}"><i class="fas fa-info-circle"></i> About Us</a>
+            <a href="{% url 'special' %}"><i class="fas fa-star"></i> Special Items</a>
+            <a href="{% url 'contact' %}"><i class="fas fa-envelope"></i> Contact</a>
+            <a href="{% url 'stats' %}"><i class="fas fa-chart-line"></i> Stats</a>
+            <a href="{% url 'franchise' %}"><i class="fas fa-handshake"></i> Franchise</a>
+            <a href="{% url 'feedback' %}"><i class="fas fa-comment"></i> Feedback</a>
+            {% if user.is_staff %}
+            <a href="{% url 'admin_dashboard' %}" style="color: var(--accent);"><i class="fas fa-lock"></i>
+                Dashboard</a>
+            <a href="{% url 'admin_logout' %}" style="opacity: 0.7;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            {% else %}
+            <a href="{% url 'admin_login' %}" style="opacity: 0.7;"><i class="fas fa-sign-in-alt"></i> Admin</a>
+            {% endif %}
+            <a href="{% url 'cart_detail' %}" class="btn-cart">
+                <i class="fas fa-shopping-cart"></i> Cart
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <p style="font-size: 0.9rem; color: var(--sand);"><i class="fas fa-broadcast-tower"></i> Live from the Pier:
+                Ambient Waves</p>
+            <audio controls loop style="height: 30px; filter: invert(100%) opacity(0.5);">
+                <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+            <p style="font-size: 0.8rem; margin-top: 0.5rem; opacity: 0.5;">(Experience the vibe with our coastal
+                soundscape)</p>
+        </div>
+        <p>&copy; 2026 WaveCafe. Ride the caffeine wave.</p>
+    </footer>
+</body>
+
+</html>

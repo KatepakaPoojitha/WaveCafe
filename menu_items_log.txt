@@ -1,0 +1,51 @@
+ID: 1 | Name: Iced Cappuccino | Image: menu/iced_cappuccino_BMesrsV.png
+ID: 2 | Name: Iced Espresso | Image: menu/iced_espresso_wmV9tKP.png
+ID: 3 | Name: Iced Latte | Image: menu/iced_latte_G8zA8HO.png
+ID: 4 | Name: Irish Coffee | Image: menu/irish_coffee_HjOu0Yn.png
+ID: 6 | Name: Iced Berry Fizz | Image: menu/berry_fizz_2RurspJ.png
+ID: 7 | Name: Cutting Chai | Image: menu/cutting_chai_y2ku7zE.png
+ID: 8 | Name: Corn Fritters | Image: menu/corn_fritters_bJcIqmM.png
+ID: 9 | Name: Spiced Hot Cocoa | Image: menu/hot_cocoa_YWr764h.png
+ID: 10 | Name: Pumpkin Ginger Latte | Image: menu/pumpkin_latte_XuE3hlf.png
+ID: 12 | Name: Sea Salt Caramel Cold Brew | Image: menu/sea_salt_caramel_EKvAYrR.png
+ID: 13 | Name: Blueberry Monsoon | Image: menu/blueberry_monsoon_JaP87m3.png
+ID: 14 | Name: Vanilla Reef Latte | Image: menu/vanilla_reef_latte_h1wvfhb.png
+ID: 15 | Name: Classic Cappuccino | Image: 
+ID: 16 | Name: Flat White | Image: 
+ID: 17 | Name: Watermelon Chill | Image: menu/watermelon_chill_Q4J0uhZ.png
+ID: 18 | Name: Spicy Corn Fritters | Image: menu/corn_fritters_WqO23ap.png
+ID: 19 | Name: Paneer Tikka Bites | Image: menu/paneer_tikka_sMQPwxV.png
+ID: 20 | Name: Cocktail Samosas | Image: menu/cocktail_samosas.jpg
+ID: 21 | Name: Classic Shawarma Roll | Image: menu/shawarma_platter_fTMu6Du.png
+ID: 22 | Name: Spicy Mexican Roll | Image: menu/shawarma_platter_kZ0Tvbd.png
+ID: 23 | Name: Shawarma Platter | Image: menu/shawarma_platter_TMTiL6M.png
+ID: 24 | Name: Pepper Grilled Chicken | Image: menu/pepper_grilled_chicken_Gz7SQwP.png
+ID: 25 | Name: Peri Peri Grilled | Image: menu/grilled_chicken.jpg
+ID: 26 | Name: Smoked BBQ Wings | Image: menu/bbq_wings_RCkmI19.png
+ID: 27 | Name: Tandoori Chicken Half | Image: menu/tandoori_chicken_4QRpdoy.png
+ID: 28 | Name: Chicken Tikka | Image: menu/chicken_tikka_Vuom1iZ.png
+ID: 29 | Name: Blue Lagoon Lemonade | Image: menu/lemonade.png
+ID: 30 | Name: Pink Strawberry Fizz | Image: menu/pink_lemonade.jpg
+ID: 31 | Name: Cheesy Peri Peri Fries | Image: menu/peri_fries.jpg
+ID: 32 | Name: Mexican Salsa Fries | Image: menu/mexican_fries.jpg
+ID: 33 | Name: BBQ Chicken Fries | Image: menu/bbq_chicken_fries.png
+ID: 34 | Name: Nachos Bhel | Image: menu/nachos.png
+ID: 35 | Name: Cheese Corn Balls | Image: menu/corn_balls.jpg
+ID: 36 | Name: Sip & Snack Combo | Image: menu/combo_sip_snack.jpg
+ID: 37 | Name: Date Night Combo | Image: menu/combo_date.jpg
+ID: 38 | Name: Family Feast Box | Image: menu/family_box.jpg
+ID: 39 | Name: Match Day Party Pack | Image: menu/party_pack.jpg
+ID: 40 | Name: Peri-Peri Cheesy Fries | Image: menu/peri_peri_fries.png
+ID: 41 | Name: Chicken Tikka Sev Puri | Image: menu/nachos_RBZzHRs.png
+ID: 42 | Name: Spiced Jamun Fizz | Image: menu/lemonade.jpg
+ID: 43 | Name: Classic Shawarma Combo | Image: menu/combo.jpg
+ID: 44 | Name: Student Saver | Image: menu/combo_student.jpg
+ID: 45 | Name: Weekend Binge Box | Image: menu/party.jpg
+ID: 47 | Name: Deal #01 | Image: menu/deal_01.jpg
+ID: 48 | Name: Deal #02 | Image: menu/deal_02.jpg
+ID: 49 | Name: Deal #03 | Image: menu/deal_03.jpg
+ID: 50 | Name: Deal #04 | Image: menu/deal_04.jpg
+ID: 51 | Name: Deal #05 | Image: menu/deal_05.jpg
+ID: 52 | Name: Deal #06 | Image: menu/deal_06.jpg
+ID: 53 | Name: Deal #07 | Image: menu/deal_07.jpg
+ID: 54 | Name: Cold Coffee Drinks | Image: menu/IMG-20251006-WA0054.jpg.jpeg

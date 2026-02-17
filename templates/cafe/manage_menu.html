@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Manage Menu Items{% endblock %}
+
+{% block extra_head %}
+<style>
+    .manage-container {
+        animation: fadeIn 0.8s ease-out;
+    }
+
+    .header-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 3rem;
+    }
+
+    .item-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        gap: 2rem;
+    }
+
+    .item-admin-card {
+        background: var(--glass);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        padding: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+    }
+
+    .item-thumb {
+        width: 80px;
+        height: 80px;
+        border-radius: 12px;
+        object-fit: cover;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .item-info {
+        flex: 1;
+    }
+
+    .item-name {
+        color: var(--sand);
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+    }
+
+    .item-meta {
+        font-size: 0.8rem;
+        opacity: 0.7;
+    }
+
+    .item-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .btn-edit {
+        background: rgba(0, 242, 254, 0.1);
+        color: var(--accent);
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.8rem;
+        text-align: center;
+        border: 1px solid var(--accent);
+        transition: all 0.3s;
+    }
+
+    .btn-edit:hover {
+        background: var(--accent);
+        color: var(--deep-sea);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="manage-container">
+    <div class="header-actions">
+        <h1 class="section-title" style="margin-bottom: 0;"><i class="fas fa-utensils"></i> Menu Management</h1>
+        <a href="{% url 'add_menu_item' %}" class="btn"><i class="fas fa-plus"></i> Add New Item</a>
+    </div>
+
+    <div class="item-grid">
+        {% for item in items %}
+        <div class="item-admin-card">
+            {% if item.image %}
+            <img src="{{ item.image.url }}" alt="{{ item.name }}" class="item-thumb">
+            {% else %}
+            <div class="item-thumb"
+                style="display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05);">
+                <i class="fas fa-image" style="opacity: 0.3;"></i>
+            </div>
+            {% endif %}
+            <div class="item-info">
+                <div class="item-name">{{ item.name }}</div>
+                <div class="item-meta">
+                    {{ item.get_category_display }} | ₹{{ item.price }}
+                </div>
+            </div>
+            <div class="item-actions">
+                <a href="{% url 'edit_menu_item' item.id %}" class="btn-edit">Edit</a>
+            </div>
+        </div>
+        {% empty %}
+        <div class="card" style="grid-column: 1 / -1; text-align: center;">
+            <p>No menu items found. Start by adding one!</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

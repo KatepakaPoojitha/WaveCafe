@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Cart - WaveCafe{% endblock %}
+
+{% block extra_head %}
+<style>
+    .cart-container {
+        max-width: 900px;
+        margin: 2rem auto;
+    }
+
+    .cart-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 2rem;
+    }
+
+    .cart-table th,
+    .cart-table td {
+        padding: 1.5rem;
+        text-align: left;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .cart-table th {
+        color: var(--sand);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 1px;
+    }
+
+    .cart-item-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 12px;
+    }
+
+    .quantity-control {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .btn-qty {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--foam);
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        text-decoration: none;
+        transition: all 0.2s;
+    }
+
+    .btn-qty:hover {
+        background: var(--sand);
+        color: var(--deep-sea);
+    }
+
+    .cart-summary {
+        text-align: right;
+        padding: 2rem;
+    }
+
+    .cart-total {
+        font-size: 1.5rem;
+        color: var(--sand);
+        margin-bottom: 2rem;
+    }
+
+    .empty-cart {
+        text-align: center;
+        padding: 4rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="cart-container">
+    <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Shopping Cart</h2>
+
+    {% if cart_items %}
+    <div class="card">
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in cart_items %}
+                <tr>
+                    <td>
+                        <div style="display: flex; gap: 1.5rem; align-items: center;">
+                            {% if item.item.image %}
+                            <img src="{{ item.item.image.url }}" class="cart-item-img">
+                            {% endif %}
+                            <div>
+                                <h4 style="margin: 0; color: var(--sand);">{{ item.item.name }}</h4>
+                                <p style="margin: 0.2rem 0 0; font-size: 0.8rem; opacity: 0.6;">{{
+                                    item.item.get_category_display }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td>₹{{ item.item.price }}</td>
+                    <td>
+                        <div class="quantity-control">
+                            <a href="{% url 'remove_from_cart' item.item.id %}" class="btn-qty"><i
+                                    class="fas fa-minus"></i></a>
+                            <span>{{ item.quantity }}</span>
+                            <a href="{% url 'add_to_cart' item.item.id %}" class="btn-qty"><i
+                                    class="fas fa-plus"></i></a>
+                        </div>
+                    </td>
+                    <td>₹{{ item.subtotal }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="cart-summary">
+            <div class="cart-total">Total Amount: <span>₹{{ total_price }}</span></div>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <a href="{% url 'menu' %}" style="color: var(--foam); text-decoration: none;"><i
+                        class="fas fa-arrow-left"></i> Continue Shopping</a>
+                <a href="{% url 'checkout' %}" class="btn" style="padding: 1rem 3rem;">Proceed to Checkout <i
+                        class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="card empty-cart">
+        <i class="fas fa-shopping-basket"
+            style="font-size: 4rem; color: var(--sand); margin-bottom: 2rem; opacity: 0.5;"></i>
+        <h2>Your cart is riding solo...</h2>
+        <p style="margin-bottom: 2rem; opacity: 0.7;">Add some coastal flavors to get started!</p>
+        <a href="{% url 'menu' %}" class="btn">Explore Menu</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
